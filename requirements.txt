@@ -1,5 +1,4 @@
 beautifulsoup4
-langchain-huggingface
 langchain
-faiss-cpu
-huggingface-hub
+faiss
+huggingface
