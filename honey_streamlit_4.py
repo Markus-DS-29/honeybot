@@ -3,7 +3,7 @@ import streamlit as st
 # importing necessary libraries
 import requests
 from bs4 import BeautifulSoup
-from urllib.parse import urljoin, urlparse
+#from urllib.parse import urljoin, urlparse
 from langchain_huggingface import HuggingFaceEndpoint, HuggingFaceEmbeddings
 from langchain.vectorstores import FAISS
 from langchain_core.prompts import PromptTemplate
