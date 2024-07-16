@@ -26,9 +26,29 @@ embeddings_folder = "https://github.com/Markus-DS-29/honeybot/blob/main/content/
 embeddings = HuggingFaceEmbeddings(model_name=embedding_model,
                                    cache_folder=embeddings_folder)
 
-# Read FAISS vector store from local drive
-save_path = "https://github.com/Markus-DS-29/honeybot/blob/main/content/faiss_index/"
-vector_all_html_url_db = FAISS.load_local(save_path, embeddings, allow_dangerous_deserialization=True)
+
+# Read FAISS vector store from github and store it in streamlit
+
+# Create the directory if it doesn't exist
+if not os.path.exists("./content"):
+    os.makedirs("./content")
+
+# Define the URL to the FAISS index file on GitHub
+faiss_url = "https://github.com/Markus-DS-29/honeybot/raw/main/content/faiss_index"
+
+# Define the local path to save the FAISS index file
+faiss_local_path = "./content/faiss_index"
+
+# Download the FAISS index file from GitHub
+if not os.path.exists(faiss_local_path):
+    response = requests.get(faiss_url)
+    response.raise_for_status()
+    with open(faiss_local_path, 'wb') as f:
+        f.write(response.content)
+
+# Use local streamlit path
+faiss_path = "./content/faiss_index/"
+vector_all_html_url_db = FAISS.load_local(faiss_path, embeddings, allow_dangerous_deserialization=True)
 retriever = vector_all_html_url_db.as_retriever(search_kwargs={"k": 2})
 
 ###
